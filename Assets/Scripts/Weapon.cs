@@ -5,9 +5,13 @@ public class Weapon : MonoBehaviour {
     public float fireRate = 0;
     public float damage = 10f;
     public LayerMask whatToHit;
+    public Transform bulletTrailPrefab;
+    public Transform muzzleFlashPrefab;
+    public float effectSpawnRate = 10;
 
     bool canShoot = true;
     float timeToFire = 0;
+    public float timeToSpawnEffect = 0;
     Transform firePoint;
     private int countShoot = 0;
 
@@ -18,7 +22,6 @@ public class Weapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,11 @@ public class Weapon : MonoBehaviour {
 		Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector2 firePointPosition = firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
         RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100, whatToHit);
+        if (Time.time >= timeToSpawnEffect) {
+            StartCoroutine("Effect");
+            timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
+        }
+
         Debug.DrawLine(firePointPosition, mousePosition, Color.green);
         if (hit.collider != null) {
             Debug.DrawLine(firePointPosition, hit.point, Color.red);
@@ -60,12 +68,17 @@ public class Weapon : MonoBehaviour {
                     hit.transform.GetComponent<Block>().Divide();
                     canShoot = false;
                 }
-                Debug.Log(hit.point);
-                //Debug.Log(hit.transform.position);
-
-                //canShoot = false;
-                Debug.Log(hit.transform +  "new collider");
             }
         }
+    }
+
+    IEnumerator Effect () {
+        Instantiate(bulletTrailPrefab, firePoint.position, firePoint.rotation);
+        Transform clone = (Transform) Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+        clone.parent = firePoint;
+        float size = Random.Range(0.6f, 0.9f);
+        clone.localScale = new Vector3(size, size, size);
+        yield return 0;
+        Destroy(clone.gameObject, 0.02f);
     }
 }
