@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +13,8 @@ public class Console : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             if (consoleField.text.Equals("reload")){
-                Application.LoadLevel("Main");
+                //Application.LoadLevel("Main");
+					SceneManager.LoadScene("Main");
             }
         });
         consoleField.gameObject.SetActive(isActive);

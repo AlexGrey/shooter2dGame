@@ -3,15 +3,18 @@ using System.Collections;
 
 public class Block : MonoBehaviour {
 
+
+
     [SerializeField]
     private int size;
+	private Transform astar;
     private Transform chunk;
     private GameObject instantiateObj;
     public Vector2 hitPoint {get; set;}
 
 	// Use this for initialization
 	void Start () {
-	
+		astar = GameObject.Find ("A*").transform;
 	}
 	
 	// Update is called once per frame
@@ -71,6 +74,7 @@ public class Block : MonoBehaviour {
 
         if (size == 1) {
             Destroy(this.gameObject);
+			astar.gameObject.GetComponent<AstarPath> ().Scan ();
         }
     }
 
