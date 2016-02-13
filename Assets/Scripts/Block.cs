@@ -29,7 +29,6 @@ public class Block : MonoBehaviour {
     public void Divide() {
         chunk = this.transform.parent.transform;
         int countOfChildChunk = this.transform.parent.childCount;
-        //Debug.Log("current chunk has:" + countOfChildChunk + " childs");
         if (size == 16) {
             GameObject obj = Resources.Load("Prefabs/BlockSize4") as GameObject;
             Destroy(this.gameObject);
@@ -51,9 +50,6 @@ public class Block : MonoBehaviour {
             float min = this.transform.localPosition.x;
             float max = this.transform.localPosition.y;
 
-            Debug.Log("min:" + min);
-            Debug.Log("max:" + max);
-
             for (float i = -1; i < 2; i ++) {
                 for (float j = -1; j < 2; j ++) {
                     if (i != 0) {
@@ -63,7 +59,6 @@ public class Block : MonoBehaviour {
 
                             float finalX = (float)System.Math.Round(i /2 + min, 1);
                             float finalY = (float)System.Math.Round(j /2 + max, 1);
-                            Debug.Log (finalX + ":" + finalY);
                             instantiateObj.transform.localPosition = new Vector3(finalX, finalY, 0);
                         }
                     }

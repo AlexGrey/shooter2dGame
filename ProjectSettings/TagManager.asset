@@ -8,6 +8,8 @@ TagManager:
   - Dangerous
   - Smelly
   - Fire
+  - Heart
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Environment
   - Background
   - Block
-  - 
+  - Monster
   - 
   - 
   - 

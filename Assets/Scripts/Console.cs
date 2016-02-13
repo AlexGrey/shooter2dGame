@@ -13,8 +13,7 @@ public class Console : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             if (consoleField.text.Equals("reload")){
-                //Application.LoadLevel("Main");
-					SceneManager.LoadScene("Main");
+				SceneManager.LoadScene("Main");
             }
         });
         consoleField.gameObject.SetActive(isActive);

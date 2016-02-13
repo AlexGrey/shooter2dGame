@@ -55,7 +55,16 @@ public class Weapon : MonoBehaviour {
             Debug.DrawLine(firePointPosition, hit.point, Color.red);
 
             if (canShoot) {
-                if (hit.transform.GetComponent<Block>().GetSize() == 1) {
+				if (hit.transform.gameObject.name.Equals("Alien")) {
+					if (hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().health == 0) {
+						hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().DestroySelf ();
+						canShoot = false;
+					} else if (hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().health > 0) {
+						hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().health -= 1;
+					}
+					canShoot = false;
+				}
+                else if (hit.transform.GetComponent<Block>().GetSize() == 1) {
                     hit.transform.GetComponent<Block>().hitPoint = hit.point;
                     hit.transform.GetComponent<Block>().Divide();
                     canShoot = false;
