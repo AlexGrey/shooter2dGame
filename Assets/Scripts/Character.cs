@@ -5,6 +5,9 @@ public class Character : MonoBehaviour {
 
 	public int health;
 
+	[HideInInspector]
+	public int countOfKilledMosters;
+
 	// Use this for initialization
 	void Start () {
 	

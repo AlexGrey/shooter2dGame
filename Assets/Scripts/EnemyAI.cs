@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		target = GameObject.Find ("CharacterRobotBoy").transform;
 		seeker = GetComponent<Seeker> ();
 
 		seeker.StartPath (transform.position, target.position, OnPathComplete);
@@ -66,13 +67,6 @@ public class EnemyAI : MonoBehaviour {
 		}
 		pathIsEnded = false;
 
-		//Direction to the next waypoint
-		//Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-
-		//dir *= speed * Time.fixedDeltaTime;
-
-		// Move the AI
-		//rb.AddForce(dir, fMode);
 		transform.position = Vector3.MoveTowards (transform.position, path.vectorPath[currentWaypoint], speed * Time.deltaTime);
 		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
 		if (dist < nextWaypointDistance) {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class ManipulatorGUI : MonoBehaviour {
 	public Image endedPanel;
     public List<GameObject> hearts;
-
+	public Text countKilledMosters;
 	// Use this for initialization
 	void Start () {
 	
@@ -27,6 +27,7 @@ public class ManipulatorGUI : MonoBehaviour {
 
 	public void ShowEndedGame() {
 		endedPanel.gameObject.SetActive (true);
+		countKilledMosters.text = GameObject.Find ("CharacterRobotBoy").GetComponent<Character> ().countOfKilledMosters.ToString();
 		Time.timeScale = 0;
 	}
 
