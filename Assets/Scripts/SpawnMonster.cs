@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class SpawnMonster : MonoBehaviour {
-
+	public float time;
 	public GameObject monster;
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("Spawn", 1f, 3f);
+		InvokeRepeating ("Spawn", time, time);
 	}
 	
 	// Update is called once per frame

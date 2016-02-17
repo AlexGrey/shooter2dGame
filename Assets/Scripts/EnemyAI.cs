@@ -2,7 +2,7 @@
 using System.Collections;
 using Pathfinding;
 
-//[RequireComponent (typeof (Rigidbody2D))]
+[RequireComponent (typeof (Rigidbody2D))]
 [RequireComponent (typeof (Seeker))]
 public class EnemyAI : MonoBehaviour {
 
@@ -67,7 +67,12 @@ public class EnemyAI : MonoBehaviour {
 		}
 		pathIsEnded = false;
 
-		transform.position = Vector3.MoveTowards (transform.position, path.vectorPath[currentWaypoint], speed * Time.deltaTime);
+		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
+		dir *= speed * Time.fixedDeltaTime;
+
+		this.gameObject.GetComponent<Rigidbody2D> ().AddForce (dir, fMode);
+
+
 		float dist = Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]);
 		if (dist < nextWaypointDistance) {
 			currentWaypoint++;
