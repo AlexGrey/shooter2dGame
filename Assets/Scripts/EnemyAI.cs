@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour {
 	public Path path;
 	public float speed = 300f;
 	public ForceMode2D fMode;
+	public Transform vision;
 
 	[HideInInspector]
 	public bool pathIsEnded = false;
@@ -24,14 +25,18 @@ public class EnemyAI : MonoBehaviour {
 		target = GameObject.Find ("CharacterRobotBoy").transform;
 		seeker = GetComponent<Seeker> ();
 
-		seeker.StartPath (transform.position, target.position, OnPathComplete);
 
-		StartCoroutine (UpdatePath ());
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (vision.GetComponent<VisionAI>().playerIsVisible) {
+			StartCoroutine (UpdatePath ());
+			vision.GetComponent<VisionAI> ().playerIsVisible = false;
+			seeker.StartPath (transform.position, target.position, OnPathComplete);
+		}
 	}
 
 	IEnumerator UpdatePath() {

@@ -6,6 +6,7 @@ public class UfOEnemy : MonoBehaviour {
 	bool state = false;
 	public int health = 4;
 
+
 	// Use this for initialization
 	void Start () {
 	}
