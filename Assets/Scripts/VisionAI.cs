@@ -26,6 +26,7 @@ public class VisionAI : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag.Equals("Player")){
 			CancelInvoke ("checkVision");
+			playerIsVisible = false;
 		}
 	}
 

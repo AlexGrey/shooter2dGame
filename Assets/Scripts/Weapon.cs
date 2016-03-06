@@ -43,7 +43,7 @@ public class Weapon : MonoBehaviour {
 
     void Shoot() {
 		Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        Vector2 firePointPosition = firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
+        Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
         RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100, whatToHit);
         if (Time.time >= timeToSpawnEffect) {
             StartCoroutine("Effect");
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour {
             Debug.DrawLine(firePointPosition, hit.point, Color.red);
 
             if (canShoot) {
-				if (hit.transform.gameObject.tag.Equals("Monster")) {
+				if (hit.transform.gameObject.tag.Equals ("Monster")) {
 					if (hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().health == 0) {
 						hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().DestroySelf ();
 						GameObject.Find ("CharacterRobotBoy").GetComponent<Character> ().countOfKilledMosters++;
@@ -64,20 +64,27 @@ public class Weapon : MonoBehaviour {
 						hit.transform.FindChild ("MeleeRange").GetComponent<UfOEnemy> ().health -= 1;
 					}
 					canShoot = false;
-				}
-                else if (hit.transform.GetComponent<Block>().GetSize() == 1) {
-                    hit.transform.GetComponent<Block>().hitPoint = hit.point;
-                    hit.transform.GetComponent<Block>().Divide();
-                    canShoot = false;
-                } else if (hit.transform.GetComponent<Block>().GetSize() == 4) {
-                    hit.transform.GetComponent<Block>().hitPoint = hit.point;
-                    hit.transform.GetComponent<Block>().Divide();
-                    canShoot = false;
-                } else if (hit.transform.GetComponent<Block>().GetSize() == 16) {
-                    hit.transform.GetComponent<Block>().hitPoint = hit.point;
-                    hit.transform.GetComponent<Block>().Divide();
-                    canShoot = false;
-                }
+				} else if (hit.transform.gameObject.tag.Equals ("Turret")) {
+					if (hit.transform.FindChild ("Gun").GetComponent<TurretGun> ().health == 0) {
+						hit.transform.FindChild ("Gun").GetComponent<TurretGun> ().DestroySelf ();
+						canShoot = false;
+					} else if (hit.transform.FindChild ("Gun").GetComponent<TurretGun> ().health > 0) {
+						hit.transform.FindChild ("Gun").GetComponent<TurretGun> ().health -= 1;
+					}
+					canShoot = false;
+				} else if (hit.transform.GetComponent<Block> ().GetSize () == 1) {
+					hit.transform.GetComponent<Block> ().hitPoint = hit.point;
+					hit.transform.GetComponent<Block> ().Divide ();
+					canShoot = false;
+				} else if (hit.transform.GetComponent<Block> ().GetSize () == 4) {
+					hit.transform.GetComponent<Block> ().hitPoint = hit.point;
+					hit.transform.GetComponent<Block> ().Divide ();
+					canShoot = false;
+				} else if (hit.transform.GetComponent<Block> ().GetSize () == 16) {
+					hit.transform.GetComponent<Block> ().hitPoint = hit.point;
+					hit.transform.GetComponent<Block> ().Divide ();
+					canShoot = false;
+				} 
             }
         }
     }
